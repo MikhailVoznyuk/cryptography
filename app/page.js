@@ -4,40 +4,14 @@ import React from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
 
+import crypt from "@/lib/crypt";
+
 export default function Home() {
-  function crypt(content, setWindowContent) {
-    const type = cryptType;
-    const fromAlph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ .,!:;?-'.split('');
-    const toAlph = 'VWXYZ .,!:;?-KLMNOPQRSTUABCDEFGHIJ'.split('');
-    let newContent = '';
-    console.log(fromAlph, toAlph)
-    let fromMap = new Map();
-    let toMap = new Map();
-    for (let i = 0; i < fromAlph.length; i++) {
-      toMap.set(fromAlph[i], toAlph[i]);
-    }
-    for (let i = 0; i < toAlph.length; i++) {
-      fromMap.set(toAlph[i], fromAlph[i]);
-    }
-    content = content.toUpperCase();
-    
-    if (type == 'to') {
-      for (let s of content) {
-        newContent += (toMap.get(s) == undefined) ? ' ' : toMap.get(s);
-      
-      }
-    } else {
-      for (let s of content) {
-        newContent += (fromMap.get(s) == undefined) ? ' ' : fromMap.get(s) ;
-      }
-    }
   
-    setWindowContent(newContent);
-  }
   const [encryptContent, setEncryptContent] = React.useState('');
   const [baseContent, setBaseContent] = React.useState('');
-  const [cryptType, setCryptType] = React.useState('to');
-  const [cryptFunction, setCryptFunction] = React.useState(0);
+  const [toCrypt, setToCrypt] = React.useState(true);
+  const [cryptFuncType, setCryptFuncType] = React.useState(0);
   const formRef = React.useRef();
   return (
     <div className={styles.page}>
@@ -47,23 +21,22 @@ export default function Home() {
           <div className={styles.col}>
             <form className={styles.mainForm} action={crypt}>
               <select name="type" onChange={e => {
-                setCryptType(e.target.value);
+                setToCrypt(Boolean(+e.target.value));
+                
                 formRef.current.value = '';
               }}>
-                <option value="to">Шифрование</option>
-                <option value="from">Дешифрование</option>
+                <option value={1}>Шифрование</option>
+                <option value={0}>Дешифрование</option>
               </select>
-              <select name='cryptFunc' onchange={e => {
-                const cryptFunc = e.current.value;
-                setCryptFunction(+cryptFunction);
+              <select name='cryptFunc' onChange={e => {
+                const cryptFuncType = e.target.value;
+                setCryptFuncType(+cryptFuncType);
               }}>
                 <option value='0'>Перестановка</option>
-                <option value='1'>Что-то еще</option>
+                <option value='1'>Шифр Фейнстеля</option>
               </select>
               <textarea ref={formRef} onChange={(e) => {
-     
-                
-                crypt(e.target.value, setEncryptContent)}
+                  crypt(e.target.value, cryptFuncType, toCrypt, setEncryptContent)}
                 } name="content" placeholder="Введите сообщение"></textarea>
    
             </form>
