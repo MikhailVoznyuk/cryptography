@@ -154,15 +154,72 @@ a.secondary {
 
 .col {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex-basis: 50%;
   flex-shrink: 0;
   flex-grow: 0;
   padding: 20px;
 }
 
+.keysContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  height: 44px;
+  width: 400px;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 20px;
+}
+
+.keysContainer span {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  font-size: 12px;
+  background-color: #000;
+  color: #FFF;
+  padding: 1px 4px;
+  border-radius: 12px;
+  border: 1px solid #000;
+
+}
+
+.keysContainer button {
+  color: #FFF;
+  background-color: #000;
+  border-radius: 20px;
+  padding: 4px 8px;
+  border: none;
+}
+
+.keysBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  row-gap: 20px;
+}
+
+.keysBlock span {
+  position: absolute;
+  font-size: 12px;
+  top: -10.5px;
+  left: 10px;
+
+  color: #FFF;
+  background-color: #000;
+  border-radius: 14px;
+  padding: 2px 6px;
+
+}
+
 .resultContainer {
   width: 400px;
-  
+  height: 100%;
   border: 1px solid #000;
   padding: 10px;
   border-radius: 20px;
